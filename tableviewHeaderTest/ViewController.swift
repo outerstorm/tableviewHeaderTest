@@ -44,7 +44,14 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return data.count
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat
+    {
+        return 30
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CustomHeaderView") as! CustomHeaderView
         view.setup()
         return view
@@ -87,6 +94,9 @@ class CustomHeaderView: UITableViewHeaderFooterView {
         super.prepareForReuse()
         
         mainLabel.text = nil
+        
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
     func setup() {
@@ -94,6 +104,10 @@ class CustomHeaderView: UITableViewHeaderFooterView {
         
         let text = String(repeating: "This is where the really long text goes so that it will wrap lines appropriately", count: randomNum)
         
+        mainLabel.preferredMaxLayoutWidth = mainLabel.frame.size.width
         mainLabel.text = text
+        
+        setNeedsLayout()
+        layoutIfNeeded()
     }
 }
